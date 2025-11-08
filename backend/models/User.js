@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const UserSchema = new mongoose.model({
+const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please add a name"],
@@ -35,7 +35,7 @@ const UserSchema = new mongoose.model({
     enum : ["user" , "admin"],
     default:"user",
   }
-},{Timestamp:true});
+},{timestamps:true});
 
 UserSchema.pre("save", async function(next) {
   if (!this.isModified("password")) {
