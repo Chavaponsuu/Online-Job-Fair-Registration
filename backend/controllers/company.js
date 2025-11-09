@@ -19,3 +19,13 @@ exports.createCompany = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+exports.getCompanies = async (req, res) => {
+  try {
+    const companies = await Company.find();
+    res.json(companies);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
