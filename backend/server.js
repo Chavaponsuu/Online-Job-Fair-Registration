@@ -3,6 +3,8 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const auth = require("./routes/auth")
+const booking = require("./routes/booking");
+const company = require("./routes/company");
 
  
 
@@ -13,6 +15,8 @@ app.use(cors());
 app.use(express.json());
 app.get("/" , (req,res) => res.send("API is running... "))
 app.use("/api/v1/auth", auth);
+app.use("/api/v1/booking" , booking);
+app.use("/api/v1/company", company);
 
 
 const PORT = process.env.PORT || 5000;
