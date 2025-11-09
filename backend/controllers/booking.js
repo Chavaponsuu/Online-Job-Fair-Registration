@@ -21,6 +21,11 @@ exports.createBooking = async (req,res) =>{
         return res.status(400).json({success :false,msg : "Select at least one company"});
 
     }
+      const companySet = new Set(companies);
+    if (companySet.size !== companies.length) {
+      return res.status(400).json({ success: false, msg: "You have selected duplicate companies" });
+    }
+    
 
     const booking = await Booking.create({user:userId , date:bookingDate,companies:companies});
     res.status(201).json({success:true,booking});
@@ -33,7 +38,7 @@ exports.createBooking = async (req,res) =>{
 
 exports.getBookings = async(req,res) =>{
     try{
-        const isAll = req.query.all === "true" &&  req.user.role === "admin";
+        const isAll = req.user.role === "admin";
         const filter = isAll ?  {}:{user:req.user._id};
 
         const bookings = await Booking.find(filter).populate("companies").populate("user","name email tel");
